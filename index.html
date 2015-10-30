@@ -36,6 +36,12 @@
         , velocity: {x: 2, y: 5}
       }
       
+      //An object for the paddle
+      var paddle = {
+        position: {x: 590, y: 450}
+          , size: {w: 100, h: 10}
+      }
+      
       // A function to repeat every time the animation loops.
       function repeatme() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -45,7 +51,11 @@
         ctx.arc(ball.position.x, ball.position.y, ball.radius, 0, 2 * Math.PI);
         ctx.fillStyle="red";
         ctx.fill();
-        
+          
+        //Draw the paddle
+                    //y,x,width,height
+        ctx.fillRect(paddle.position.y, paddle.position.x, paddle.size.w, paddle.size.h);
+       
         // Update the y location.
 		ball.position.x += ball.velocity.x;
         ball.position.y += ball.velocity.y;
