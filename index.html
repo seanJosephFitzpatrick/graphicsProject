@@ -14,6 +14,7 @@
         canvas {
             border: 1px solid black;
         }
+
     </style>
 
 </head>
@@ -39,6 +40,11 @@
             velocity: {
                 x: 2,
                 y: 5
+            },
+            drawBall: function(){
+                // Draw the balL.
+                ctx.beginPath();
+                ctx.arc(ball.position.x, ball.position.y, ball.radius, 0, 2 * Math.PI);
             }
         }
 
@@ -58,25 +64,28 @@
             }
         }
         
+        //Draw paddle function
         function movePaddle(){
-           if (event.keyCode == 39)
+            //if(paddle.position.y >= 900)
+               // return false;
+      
+            if (event.keyCode == 39){
+                if(paddle.position.y < 900)
                 paddle.position.y += 10;
-            else if (event.keyCode == 37)
+            }
+            else if(event.keyCode == 37){
+                if(paddle.position.y > 0)
                 paddle.position.y -= 10;
-            if(paddle.size.w == 900)
-                paddle.position.x = 1100;
+            } 
+                
+            
+             
         }
 
         // A function to repeat every time the animation loops.
         function repeatme() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            // Draw the balL.
-            ctx.beginPath();
-            ctx.arc(ball.position.x, ball.position.y, ball.radius, 0, 2 * Math.PI);
-            ctx.fillStyle = "red";
-            ctx.fill();
-
+            
             // Update the y location.
             ball.position.x += ball.velocity.x;
             ball.position.y += ball.velocity.y;
@@ -88,9 +97,18 @@
             if ((ball.position.y >= canvas.height - ball.radius) || (ball.position.y <= ball.radius))
                 ball.velocity.y = -ball.velocity.y;
             
+            
+            ctx.fillStyle = "blue";
+            ctx.fill();
             paddle.drawPaddle();
+            ctx.fillStyle = "red";
+            ctx.fill();
+            ball.drawBall();
+                
             window.addEventListener('keydown',movePaddle,true);
+                
             window.requestAnimationFrame(repeatme);
+
         }
 
         // Get the animation going.
