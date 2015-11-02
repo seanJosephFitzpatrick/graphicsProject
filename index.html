@@ -2,78 +2,107 @@
 
 <html>
 
-  <head>
+<head>
     <meta charset="UTF-8">
     <title>Canvas</title>
 
     <style type="text/css">
-      body {
-          background-color: white;
-      }
-      
-      canvas {
-        border: 1px solid black;
-      }
+        body {
+            background-color: white;
+        }
+        
+        canvas {
+            border: 1px solid black;
+        }
     </style>
 
-  </head>
+</head>
 
-  <body>
-      
+<body>
+
     <!--//canvas id, height and width -->
     <canvas id="canvas-for-ball" height="600px" width="1000px"></canvas>
 
     <script type="text/javascript">
-      // Gets a handle to the element with id canvasOne.
-      var canvas = document.getElementById("canvas-for-ball");
-      // Get a 2D context for the canvas.
-      var ctx = canvas.getContext("2d");
-      
-      // An object for the ball.
-      var ball = {
-        position: {x: 200, y: 10}
-        , radius: 10
-        , velocity: {x: 2, y: 5}
-      }
-      
-      //An object for the paddle
-      var paddle = {
-        position: {x: 590, y: 450}
-          , size: {w: 100, h: 10}
-      }
-      
-      // A function to repeat every time the animation loops.
-      function repeatme() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        // Gets a handle to the element with id canvasOne.
+        var canvas = document.getElementById("canvas-for-ball");
+        // Get a 2D context for the canvas.
+        var ctx = canvas.getContext("2d");
+
+        // An object for the ball.
+        var ball = {
+            position: {
+                x: 200,
+                y: 10
+            },
+            radius: 10,
+            velocity: {
+                x: 2,
+                y: 5
+            }
+        }
+
+        //An object for the paddle
+        var paddle = {
+            position: {
+                x: 590,
+                y: 450
+            },
+            size: {
+                w: 100,
+                h: 10
+            },
+            drawPaddle: function(){
+                //Draw the paddle
+                ctx.fillRect(paddle.position.y, paddle.position.x, paddle.size.w, paddle.size.h);
+            }
+        }
         
-        // Draw the balL.
-        ctx.beginPath();
-        ctx.arc(ball.position.x, ball.position.y, ball.radius, 0, 2 * Math.PI);
-        ctx.fillStyle="red";
-        ctx.fill();
-          
-        //Draw the paddle
-                    //y,x,width,height
-        ctx.fillRect(paddle.position.y, paddle.position.x, paddle.size.w, paddle.size.h);
-       
-        // Update the y location.
-		ball.position.x += ball.velocity.x;
-        ball.position.y += ball.velocity.y;
-		
-        //If the ball's x position is not greater than the canvas width
-        if ((ball.position.x >= canvas.width - ball.radius) ||  (ball.position.x <= ball.radius))
-          ball.velocity.x = -ball.velocity.x;  
-        //If the ball's y position is not greater than the canvas height
-		if ((ball.position.y >= canvas.height - ball.radius) ||  (ball.position.y <= ball.radius))
-          ball.velocity.y = -ball.velocity.y;
-        
+        function movePaddle(){
+           if (event.keyCode == 39)
+                paddle.position.y += 10;
+            else if (event.keyCode == 37)
+                paddle.position.y -= 10;
+            if(paddle.size.w == 900)
+                paddle.position.x = 1100;
+        }
+
+        // A function to repeat every time the animation loops.
+        function repeatme() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Draw the balL.
+            ctx.beginPath();
+            ctx.arc(ball.position.x, ball.position.y, ball.radius, 0, 2 * Math.PI);
+            ctx.fillStyle = "red";
+            ctx.fill();
+
+            // Update the y location.
+            ball.position.x += ball.velocity.x;
+            ball.position.y += ball.velocity.y;
+
+            //If the ball's x position is not greater than the canvas width
+            if ((ball.position.x >= canvas.width - ball.radius) || (ball.position.x <= ball.radius))
+                ball.velocity.x = -ball.velocity.x;
+            //If the ball's y position is not greater than the canvas height
+            if ((ball.position.y >= canvas.height - ball.radius) || (ball.position.y <= ball.radius))
+                ball.velocity.y = -ball.velocity.y;
+            
+            paddle.drawPaddle();
+            window.addEventListener('keydown',movePaddle,true);
+            window.requestAnimationFrame(repeatme);
+        }
+
+        // Get the animation going.
         window.requestAnimationFrame(repeatme);
-      }
-      
-      // Get the animation going.
-      window.requestAnimationFrame(repeatme);
+        
+        
+        
+
+
+    
     </script>
 
-  </body>
+</body>
 
 </html>
