@@ -29,37 +29,47 @@
         var canvas = document.getElementById("canvas-for-ball");
         // Get a 2D context for the canvas.
         var ctx = canvas.getContext("2d");
-
+        
+        /*
+        Site referenced for this code
+        https://developer.mozilla.org/en-US/docs/Games/Workflows/2D_Breakout_game_pure_JavaScript
+        */
+        var width = 75;//block width
+        var height = 20;//block height
+        var blockSpace = 20;//spacing betweens blocks
+        var blockOffsetTop = 20;//offset from bottom of canvas
+        var blockOffsetLeft = 30;// offset from left of canvas
+                
         // An object for the ball.
         var ball = {
             position: {
-                x: 200,
-                y: 10
+                x: 200,//ball x position
+                y: 10//ball y position
             },
-            radius: 10,
+            radius: 10,//ball radius
             velocity: {
-                x: 2,
-                y: 5
+                x: 2,//ball x velocity
+                y: 5//ball y velocity
             },
             drawBall: function() {
                 // Draw the balL.
-                ctx.arc(ball.position.x, ball.position.y, ball.radius, 0, 2 * Math.PI);
-                ctx.fillStyle = "red";
-                ctx.fill();
+                ctx.arc(ball.position.x, ball.position.y, ball.radius, 0, 2 * Math.PI);//draw arc
+                ctx.fillStyle = "red";//fillstyle color red
+                ctx.fill();//fill in shape
             }
         }
 
         //An object for the paddle
         var paddle = {
             position: {
-                x: 590,
-                y: 400
+                x: 590,//paddle x position
+                y: 400//paddle y position
             },
             size: {
-                w: 100,
-                h: 10
+                w: 100,//paddle width
+                h: 10//paddle height
             },
-            drawPaddle: function() {
+            drawPaddle: function() {//draw paddle function
                 //Draw the paddle
                 ctx.fillStyle = "blue";
                 ctx.fill();
@@ -67,28 +77,41 @@
             }
         }
         
-        //Use math.random, round it down with math.florr and store in varialbe m and n and use for x and y coordinates.
-        var n = Math.floor((Math.random() * 570) + 1); 
-        var m = Math.floor((Math.random() * 900) + 1); 
-
-        var block = {
-            position: {
-                x: n, //Use random n value for x coordinate
-                y: m //use random m variable for y coordinate
-            },
-            size: {
-                w: 100,
-                h: 20
-            },
-            drawBlock: function() {
-                ctx.fillStyle = "green";
-                ctx.fill();
-                ctx.fillRect(block.position.y, block.position.x, block.size.w, block.size.h);
-
-            }
+   
+        ////////////////////////////////////////////////////////////////////////////////////////////
+        /*
+            Site referenced for this section of code
+            https://developer.mozilla.org/en-US/docs/Games/Workflows/2D_Breakout_game_pure_JavaScript
+        */
+        var blocks = [];
+            for(var i = 0; i < 10; i++) {
+                
+                blocks[i] = [];
+                
+                for(var j = 0; j < 6; j++) {
+                    blocks[i][j] = { x: 0, y: 0, alive: 1 };
+                }
         }
         
-        
+        function drawBlocks() {
+            for(var i = 0; i < 10; i++) {
+                for(var j = 0; j < 6;  j++) {
+                    var y = (j*(height+blockSpace))+blockOffsetTop;
+                    var x = (i*(width+blockSpace))+blockOffsetLeft;
+                    
+                    blocks[i][j].x = x;
+                    blocks[i][j].y = y;
+                    
+                    ctx.beginPath();
+                    ctx.rect(x, y, width, height);
+                    ctx.fillStyle = "blue";
+                    ctx.fill();
+                    ctx.closePath();
+                }
+            }
+        }
+        //////////////////////////////////////////////////////////////////////////////////////////////
+        		 
         //Draw paddle function
         function movePaddle() {
 
@@ -103,6 +126,7 @@
             }
         }
         
+        
         //Ian's init function
         function init() {
             
@@ -113,13 +137,11 @@
             ctx.beginPath();
             paddle.drawPaddle();
             ctx.closePath();
-            
+                
+            drawBlocks();
           
+            
 
-            ctx.beginPath();
-            block.drawBlock();
-            ctx.closePath();
-           
             if (ball.position.y - ball.radius > canvas.height)
                 endGame();
         }
@@ -127,7 +149,7 @@
         function endGame() {
             exit();
         }
-        
+                     
         // A function to repeat every time the animation loops.
         function repeatme() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -144,10 +166,9 @@
             if ((ball.position.y >= paddle.position.x - ball.radius) && ((ball.position.x > paddle.position.y &&
                     (ball.position.x < paddle.position.y + 100))) || (ball.position.y <= ball.radius))
                 ball.velocity.y = -ball.velocity.y;
-
+            
             init();
-
-
+           
             window.addEventListener('keydown', movePaddle, true);
 
             window.requestAnimationFrame(repeatme);
