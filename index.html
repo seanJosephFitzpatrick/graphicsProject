@@ -50,14 +50,15 @@
         var width = 75;//block width
         var height = 20;//block height
         var blockSpace = 20;//spacing betweens blocks
-        var blockOffsetTop = 20;//offset from bottom of canvas
+        var blockOffsetTop = 40;//offset from bottom of canvas
         var blockOffsetLeft = 30;// offset from left of canvas
+        var score = 0;
                 
         // An object for the ball.
         var ball = {
             position: {
-                x: 200,//ball x position
-                y: 10//ball y position
+                x: 300,//ball x position
+                y: 350//ball y position
             },
             radius: 10,//ball radius
             velocity: {
@@ -76,7 +77,7 @@
         var paddle = {
             position: {
                 x: 590,//paddle x position
-                y: 400//paddle y position
+                y: 350//paddle y position
             },
             size: {
                 w: 100,//paddle width
@@ -143,11 +144,13 @@
                             ball.velocity.y = -ball.velocity.y
                             //set the seek.alive to 0 - to stop drawing on the screen using the if statement in drawBlocks
                             seek.alive = 0;
+                            score ++;
                         }
                     }
                 }
             }
         }
+        
         //////////////////////////////////////////////////////////////////////////////////////////////
         		 
         //Draw paddle function
@@ -164,6 +167,20 @@
             }
         }
         
+        ///////////////////////////////////////////////////////////////////////////
+        /*
+            Site referenced for this section of code
+            http://www.w3schools.com/canvas/canvas_text.asp
+            http://www.w3schools.com/tags/ref_colorpicker.asp
+        */
+        function displayScore() {
+            ctx.font = "16px Arial";
+            ctx.fillStyle = "#99CCFF";
+            ctx.textAlign = "center";
+            ctx.fillText("Score: " + score, canvas.width/2, canvas.height/2 + 200);
+        }
+        ///////////////////////////////////////////////////////////////////////////
+        
         
         //Ian's init function
         function init() {
@@ -178,6 +195,7 @@
                 
             drawBlocks();
             blockCollision();
+            displayScore();
           
             
 
@@ -186,6 +204,7 @@
         }
 
         function endGame() {
+            alert("Game Over");
             exit();
         }
                              
