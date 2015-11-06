@@ -8,6 +8,17 @@ In this project I am required to design a running game on the HTML5 canvas as pa
 ## Ideas
 So far I am thinking of something along the lines of some kind of Brick Break. This is to get the project up and running and the ideas will more than likely change as I am going through the project.
 
+## Game Instructions
+The aim is to bounce the ball off the paddle untill all the bricks are gone. If the ball drop below the canvas floor the game will end. The paddle is control using the left and right arrow keys. There is only the one level in the game so once all the bricks are broken the game is complete.
+
+## Game Development
+- Spawn the blocks in a random position starting of with 5 blocks; randomly adding more as the blocks are broken. 
+- Add a pause button to the game - like the up arrow button. 
+- Add extra levels to the game.
+- Add bonus features.
+- More user interation.
+- High score counter.
+
 ## Instructions
 1. Create a file called index.html, which is the webpage the user will open to start the game.
 You may use multiple files to organise your game, however the starting point must be index.html.

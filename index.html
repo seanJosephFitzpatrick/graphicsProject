@@ -13,7 +13,6 @@
         }
         
         canvas {
-            border: 1px solid black;
             //////////////////////////////////////////////////////
             /*
                 Site referenced for this section of code
@@ -33,7 +32,14 @@
 
 </head>
 
-<body>
+//////////////////////////////////////////////////////////////
+<!--
+                Background sourced at
+                http://www.letterwallpaper15.xyz/free-backgrounds-3/
+    -->
+
+<body background="bkgrd.png">
+    //////////////////////////////////////////////////////////////
 
     <!--//canvas id, height and width -->
     <canvas id="canvas-for-ball" height="600px" width="1000px"></canvas>
@@ -43,77 +49,80 @@
         var canvas = document.getElementById("canvas-for-ball");
         // Get a 2D context for the canvas.
         var ctx = canvas.getContext("2d");
-        
-   
-        var column = 10;//block colums
-        var row = 6;//block rows
-        var width = 75;//block width
-        var height = 20;//block height
-        var blockSpace = 20;//spacing betweens blocks
-        var blockOffsetTop = 40;//offset from bottom of canvas
-        var blockOffsetLeft = 30;// offset from left of canvas
+
+
+        var column = 10; //block colums
+        var row = 6; //block rows
+        var width = 75; //block width
+        var height = 20; //block height
+        var blockSpace = 20; //spacing betweens blocks
+        var blockOffsetTop = 40; //offset from bottom of canvas
+        var blockOffsetLeft = 30; // offset from left of canvas
         var score = 0;
-                
+
         // An object for the ball.
         var ball = {
             position: {
-                x: 300,//ball x position
-                y: 350//ball y position
+                x: 300, //ball x position
+                y: 350 //ball y position
             },
-            radius: 10,//ball radius
+            radius: 10, //ball radius
             velocity: {
-                x: 2,//ball x velocity
-                y: 5//ball y velocity
+                x: 2, //ball x velocity
+                y: 5 //ball y velocity
             },
-            drawBall: function() {
+            drawBall: function () {
                 // Draw the balL.
-                ctx.arc(ball.position.x, ball.position.y, ball.radius, 0, 2 * Math.PI);//draw arc
-                ctx.fillStyle = "red";//fillstyle color red
-                ctx.fill();//fill in shape
+                ctx.arc(ball.position.x, ball.position.y, ball.radius, 0, 2 * Math.PI); //draw arc
+                ctx.fillStyle = "red"; //fillstyle color red
+                ctx.fill(); //fill in shape
             }
         }
 
         //An object for the paddle
         var paddle = {
             position: {
-                x: 590,//paddle x position
-                y: 350//paddle y position
+                x: 590, //paddle x position
+                y: 350 //paddle y position
             },
             size: {
-                w: 100,//paddle width
-                h: 10//paddle height
+                w: 100, //paddle width
+                h: 10 //paddle height
             },
-            drawPaddle: function() {//draw paddle function
+            drawPaddle: function () { //draw paddle function
                 //Draw the paddle
                 ctx.fillStyle = "blue";
                 ctx.fill();
                 ctx.fillRect(paddle.position.y, paddle.position.x, paddle.size.w, paddle.size.h);
             }
         }
-        
-   
+
         ////////////////////////////////////////////////////////////////////////////////////////////
         /*
             Site referenced for this section of code
             https://developer.mozilla.org/en-US/docs/Games/Workflows/2D_Breakout_game_pure_JavaScript
         */
         var blocks = [];
-            for(var i = 0; i < column; i++) {
-                
-                blocks[i] = [];
-                
-                for(var j = 0; j < row; j++) {
-                    blocks[i][j] = { x: 0, y: 0, alive: 1};
-                }
+        for (var i = 0; i < column; i++) {
+
+            blocks[i] = [];
+
+            for (var j = 0; j < row; j++) {
+                blocks[i][j] = {
+                    x: 0,
+                    y: 0,
+                    alive: 1
+                };
+            }
         }
-        
+
         //Function to draw the blocks using a nested forloop and populating 2d array
         function drawBlocks() {
-            for(var i = 0; i < column; i++) {
-                for(var j = 0; j < row;  j++) {
-                    if(blocks[i][j].alive == 1){
-                        var y = (j*(height+blockSpace))+blockOffsetTop;
-                        var x = (i*(width+blockSpace))+blockOffsetLeft;
+            for (var i = 0; i < column; i++) {
+                for (var j = 0; j < row; j++) {
+                    if (blocks[i][j].alive == 1) {
+                        var y = (j * (height + blockSpace)) + blockOffsetTop;
+                        var x = (i * (width + blockSpace)) + blockOffsetLeft;
 
                         blocks[i][j].x = x;
                         blocks[i][j].y = y;
@@ -122,51 +131,51 @@
                         ctx.rect(x, y, width, height);
                         ctx.fillStyle = "blue";
                         ctx.fill();
-                        ctx.closePath(); 
+                        ctx.closePath();
                     }
-         
+
                 }
             }
         }
-        
-      
+
+
         //Function to detect when the ball collides with a block using nested forloop
-        function blockCollision() {    
-            for(i = 0; i < column; i++) {
-                for(j = 0; j < row; j++) {
+        function blockCollision() {
+            for (i = 0; i < column; i++) {
+                for (j = 0; j < row; j++) {
                     var seek = blocks[i][j];
-                    if(seek.alive == 1) {
+                    if (seek.alive == 1) {
                         /*If the balls x position is above the blocks x positin && is below the balls x position + width && 
                         the balls y position is greater than the blocks y position && 
                         and less the the blocks y position + height - All these statements must be true*/
-                        if((ball.position.x > seek.x) && (ball.position.x < seek.x + width) && (ball.position.y > seek.y) && (ball.position.y < seek.y + height)) {
+                        if ((ball.position.x > seek.x) && (ball.position.x < seek.x + width) && (ball.position.y > seek.y) && (ball.position.y < seek.y + height)) {
                             //Change velocity of the ball
                             ball.velocity.y = -ball.velocity.y
-                            //set the seek.alive to 0 - to stop drawing on the screen using the if statement in drawBlocks
+                                //set the seek.alive to 0 - to stop drawing on the screen using the if statement in drawBlocks
                             seek.alive = 0;
-                            score ++;
+                            score++;
                         }
                     }
                 }
             }
         }
-        
+
         //////////////////////////////////////////////////////////////////////////////////////////////
-        		 
+
         //Draw paddle function
         function movePaddle() {
 
             if (event.keyCode == 39) {
                 //If the paddles y position is less than 900 then increment the y position
                 if (paddle.position.y < 900)
-                    paddle.position.y += 10;
+                    paddle.position.y += 15;
             } else if (event.keyCode == 37) {
                 //If the paddles y position is greater than zero then decrement the y position
                 if (paddle.position.y > 0)
-                    paddle.position.y -= 10;
+                    paddle.position.y -= 15;
             }
         }
-        
+
         ///////////////////////////////////////////////////////////////////////////
         /*
             Site referenced for this section of code
@@ -174,17 +183,16 @@
             http://www.w3schools.com/tags/ref_colorpicker.asp
         */
         function displayScore() {
-            ctx.font = "16px Arial";
-            ctx.fillStyle = "#99CCFF";
-            ctx.textAlign = "center";
-            ctx.fillText("Score: " + score, canvas.width/2, canvas.height/2 + 200);
+            ctx.font = "16px Arial"; //set font to 16px and Arial
+            ctx.fillStyle = "#99CCFF"; //set the color
+            ctx.textAlign = "center"; //Set text align center
+            ctx.fillText("Score: " + score, canvas.width / 2, canvas.height / 2 + 200);
         }
         ///////////////////////////////////////////////////////////////////////////
-        
-        
+
         //Ian's init function
         function init() {
-            
+
             ctx.beginPath();
             ball.drawBall();
             ctx.closePath();
@@ -192,29 +200,31 @@
             ctx.beginPath();
             paddle.drawPaddle();
             ctx.closePath();
-                
+
+            ballVelocity();
             drawBlocks();
             blockCollision();
             displayScore();
-          
-            
 
-            if (ball.position.y - ball.radius > canvas.height)
-                endGame();
+            //If the ball leaves the bottom of the canvas - or is > the canvas.height
+            if (ball.position.y - ball.radius > canvas.height) {
+                endGame(); //Call end game function
+            } else if (score == 2) {
+                alert("You Win!");
+                exit();
+            }
         }
 
         function endGame() {
-            alert("Game Over");
-            exit();
+            alert("Game Over"); //Alert box
+            exit(); //Exit game
         }
-                             
-        // A function to repeat every time the animation loops.
-        function repeatme() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+        //Ball velocity function
+        function ballVelocity() {
             // Update the y location.
-            ball.position.x += ball.velocity.x;
-            ball.position.y += ball.velocity.y;
+            ball.position.x += ball.velocity.x; //Starts the balls velocity x position
+            ball.position.y += ball.velocity.y; //Starts the balls velocity y position
 
             //If the ball's x position is not greater than the canvas width
             if ((ball.position.x >= canvas.width - ball.radius) || (ball.position.x <= ball.radius))
@@ -224,11 +234,21 @@
             if ((ball.position.y >= paddle.position.x - ball.radius) && ((ball.position.x > paddle.position.y &&
                     (ball.position.x < paddle.position.y + 100))) || (ball.position.y <= ball.radius))
                 ball.velocity.y = -ball.velocity.y;
-            
+        }
+
+        // A function to repeat every time the animation loops.
+        function repeatme() {
+            //Clear the entire canvas every time the repeatme is run
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+
+            //Call init function
             init();
-           
+
+            //Listen for the left and right keypress and if true call movePaddle function.
             window.addEventListener('keydown', movePaddle, true);
 
+            //Update the animation
             window.requestAnimationFrame(repeatme);
 
         }
