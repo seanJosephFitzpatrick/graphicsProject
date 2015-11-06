@@ -14,6 +14,20 @@
         
         canvas {
             border: 1px solid black;
+            //////////////////////////////////////////////////////
+            /*
+                Site referenced for this section of code
+                http://stackoverflow.com/questions/5127937/how-to-center-canvas-in-html5
+            */
+            padding: 0;
+            margin: auto;
+            display: block;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            //////////////////////////////////////////////////////
         }
     </style>
 
@@ -92,6 +106,7 @@
                 }
         }
         
+        //Function to draw the blocks using a nested forloop and populating 2d array
         function drawBlocks() {
             for(var i = 0; i < column; i++) {
                 for(var j = 0; j < row;  j++) {
@@ -109,6 +124,27 @@
                         ctx.closePath(); 
                     }
          
+                }
+            }
+        }
+        
+      
+        //Function to detect when the ball collides with a block using nested forloop
+        function blockCollision() {    
+            for(i = 0; i < column; i++) {
+                for(j = 0; j < row; j++) {
+                    var seek = blocks[i][j];
+                    if(seek.alive == 1) {
+                        /*If the balls x position is above the blocks x positin && is below the balls x position + width && 
+                        the balls y position is greater than the blocks y position && 
+                        and less the the blocks y position + height - All these statements must be true*/
+                        if((ball.position.x > seek.x) && (ball.position.x < seek.x + width) && (ball.position.y > seek.y) && (ball.position.y < seek.y + height)) {
+                            //Change velocity of the ball
+                            ball.velocity.y = -ball.velocity.y
+                            //set the seek.alive to 0 - to stop drawing on the screen using the if statement in drawBlocks
+                            seek.alive = 0;
+                        }
+                    }
                 }
             }
         }
@@ -152,22 +188,7 @@
         function endGame() {
             exit();
         }
-        
-        function blockCollision() {
-        
-            for(i = 0; i < column; i++) {
-                for(j = 0; j < row; j++) {
-                    var seek = blocks[i][j];
-                    if(seek.alive == 1) {
-                        if((ball.position.x > seek.x) && (ball.position.x < seek.x + width) && (ball.position.y > seek.y) && (ball.position.y < seek.y + height)) {
-                            ball.velocity.y = -ball.velocity.y;
-                            seek.alive = 0;
-                        }
-                    }
-                }
-            }
-        }
-                     
+                             
         // A function to repeat every time the animation loops.
         function repeatme() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
