@@ -30,10 +30,9 @@
         // Get a 2D context for the canvas.
         var ctx = canvas.getContext("2d");
         
-        /*
-        Site referenced for this code
-        https://developer.mozilla.org/en-US/docs/Games/Workflows/2D_Breakout_game_pure_JavaScript
-        */
+   
+        var column = 10;//block colums
+        var row = 6;//block rows
         var width = 75;//block width
         var height = 20;//block height
         var blockSpace = 20;//spacing betweens blocks
@@ -84,29 +83,32 @@
             https://developer.mozilla.org/en-US/docs/Games/Workflows/2D_Breakout_game_pure_JavaScript
         */
         var blocks = [];
-            for(var i = 0; i < 10; i++) {
+            for(var i = 0; i < column; i++) {
                 
                 blocks[i] = [];
                 
-                for(var j = 0; j < 6; j++) {
-                    blocks[i][j] = { x: 0, y: 0, alive: 1 };
+                for(var j = 0; j < row; j++) {
+                    blocks[i][j] = { x: 0, y: 0, alive: 1};
                 }
         }
         
         function drawBlocks() {
-            for(var i = 0; i < 10; i++) {
-                for(var j = 0; j < 6;  j++) {
-                    var y = (j*(height+blockSpace))+blockOffsetTop;
-                    var x = (i*(width+blockSpace))+blockOffsetLeft;
-                    
-                    blocks[i][j].x = x;
-                    blocks[i][j].y = y;
-                    
-                    ctx.beginPath();
-                    ctx.rect(x, y, width, height);
-                    ctx.fillStyle = "blue";
-                    ctx.fill();
-                    ctx.closePath();
+            for(var i = 0; i < column; i++) {
+                for(var j = 0; j < row;  j++) {
+                    if(blocks[i][j].alive == 1){
+                        var y = (j*(height+blockSpace))+blockOffsetTop;
+                        var x = (i*(width+blockSpace))+blockOffsetLeft;
+
+                        blocks[i][j].x = x;
+                        blocks[i][j].y = y;
+
+                        ctx.beginPath();
+                        ctx.rect(x, y, width, height);
+                        ctx.fillStyle = "blue";
+                        ctx.fill();
+                        ctx.closePath(); 
+                    }
+         
                 }
             }
         }
@@ -139,6 +141,7 @@
             ctx.closePath();
                 
             drawBlocks();
+            blockCollision();
           
             
 
@@ -148,6 +151,21 @@
 
         function endGame() {
             exit();
+        }
+        
+        function blockCollision() {
+        
+            for(i = 0; i < column; i++) {
+                for(j = 0; j < row; j++) {
+                    var seek = blocks[i][j];
+                    if(seek.alive == 1) {
+                        if((ball.position.x > seek.x) && (ball.position.x < seek.x + width) && (ball.position.y > seek.y) && (ball.position.y < seek.y + height)) {
+                            ball.velocity.y = -ball.velocity.y;
+                            seek.alive = 0;
+                        }
+                    }
+                }
+            }
         }
                      
         // A function to repeat every time the animation loops.
