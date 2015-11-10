@@ -18,6 +18,7 @@ The aim is to bounce the ball off the paddle untill all the bricks are gone. If 
 - Add bonus features.
 - More user interation.
 - High score counter.
+- Add jquery dialog boxs
 
 ## Instructions
 1. Create a file called index.html, which is the webpage the user will open to start the game.

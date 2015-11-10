@@ -117,7 +117,7 @@
         }
 
         //Function to draw the blocks using a nested forloop and populating 2d array
-        function drawBlocks() {
+        function drawBlocks() {   
             for (var i = 0; i < column; i++) {
                 for (var j = 0; j < row; j++) {
                     if (blocks[i][j].alive == 1) {
@@ -175,7 +175,7 @@
                     paddle.position.y -= 15;
             }
         }
-
+        
         ///////////////////////////////////////////////////////////////////////////
         /*
             Site referenced for this section of code
@@ -209,7 +209,7 @@
             //If the ball leaves the bottom of the canvas - or is > the canvas.height
             if (ball.position.y - ball.radius > canvas.height) {
                 endGame(); //Call end game function
-            } else if (score == 2) {
+            } else if (score == 60) {
                 alert("You Win!");
                 exit();
             }
