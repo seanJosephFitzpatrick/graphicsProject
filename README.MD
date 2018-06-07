@@ -14,7 +14,7 @@ Google Chrome
 
 ### Installing
 
-Download zip [here]()
+Download zip [here](https://github.com/seanJosephFitzpatrick/graphicsProject/archive/master.zip)
 
 ## Built With
 
