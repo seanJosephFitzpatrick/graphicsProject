@@ -23,6 +23,6 @@ Download zip [here]()
 
 ## License
 
-This project is licensed under the [MIT]() License
+This project is licensed under the [MIT](https://github.com/seanJosephFitzpatrick/graphicsProject/blob/master/LICENSE) License
 
 
