@@ -13,7 +13,7 @@ Run the index.HTML in Chrome browser.
 
 ### Prerequisites
 
-Google Chrome
+[Google Chrome](https://www.google.com/chrome/)
 
 ### Installing
 
