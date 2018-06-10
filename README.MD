@@ -5,7 +5,7 @@
 3rd year Software Development project. The project uses the WebGL API to render 2D graphics in the browser. The project is a simplified version of Brick Breaker using the arrow keys on the key board to control a paddle to bounce a ball. When the ball comes into contact with any of the bricks, they are destroyed and a point is awarded.  
 
 Languages, Technologies and Implementation Architecture used for this project:
-JavaScript, HTML, CSS, HTML Canvas, WebGL, JQuery, JQuery UI.
+* JavaScript, HTML, CSS, HTML Canvas, WebGL, JQuery, JQuery UI.
 
 ## Getting Started
 
